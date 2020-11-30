@@ -24,11 +24,20 @@
 
                         <li class="active"><a href="/"<#--"<#if currentUserId != -1>/tasks/${currentUserId}</#if>"-->><i class="fa fa-book"></i><span>My Tasks</span></a></li>
                         <#if isAdmin??>
-                            <li class="active"><a href="/" ><i class="lnr lnr-cog"></i><span>Admin</span></a>
+                            <li class="active"><a href="/admin" ><i class="lnr lnr-cog"></i><span>Admin</span></a>
                                 <ul class="sub-menu-list">
                                     <li><a href="/admin/empl/all">Employees</a></li>
                                     <li><a href="/admin/branch/all">Branches</a></li>
                                     <li><a href="/admin/cabinet/all">Сabinets</a></li>
+                                    <li><a href="/admin/service/all">Services</a></li>
+                                    <li><a href="/admin/order/all">Orders</a></li>
+                                </ul>
+                            </li>
+                            <li class="active"><a href="/employee" ><i class="fa fa-th"></i><span>Employee</span></a>
+                                <ul class="sub-menu-list">
+                                    <li><a href="/employee/script_group/all">Groups</a></li>
+                                    <li><a href="/employee/script/all">Scripts</a></li>
+                                    <li><a href="/employee/custom_script/all">Custom scripts</a></li>
                                 </ul>
                             </li>
 
