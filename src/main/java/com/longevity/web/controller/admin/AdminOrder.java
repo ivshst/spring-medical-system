@@ -2,9 +2,11 @@ package com.longevity.web.controller.admin;
 
 import com.longevity.web.domain.services.Order;
 import com.longevity.web.domain.services.StatusScore;
+import com.longevity.web.domain.users.Employee;
 import com.longevity.web.service.ClientService;
 import com.longevity.web.service.services.OrderService;
 import com.longevity.web.service.services.ServicesService;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,14 +32,14 @@ public class AdminOrder {
 
     @GetMapping("all")
     public String getAllOrder(Model model){
-        model.addAttribute("orders", orderService.getAllOrder());
+       // model.addAttribute("orders", orderService.getAllOrder());
+        // model.addAttribute("services", servicesService.getAllServices());
+        //model.addAttribute("clients", clientService.getAllClient());
+        //model.addAttribute("statuses", new ArrayList<>(EnumSet.allOf(StatusScore.class)));
 
-        model.addAttribute("services", servicesService.getAllServices());
-        model.addAttribute("clients", clientService.getAllClient());
-        model.addAttribute("statuses", new ArrayList<>(EnumSet.allOf(StatusScore.class)));
-
-        System.out.println();
-        return "admin/order/orders";
+        //System.out.println();
+        //return "admin/order/orders";
+        return findPaginatedOrders(1, model);
     }
 
     @GetMapping("{id}")
@@ -74,4 +76,23 @@ public class AdminOrder {
         orderService.deleteOrder(order);
         return "redirect:/admin/order/all";
     }
+
+    @GetMapping("/all/pageus/{pageNo}")
+    public String findPaginatedOrders(@PathVariable("pageNo") int pageNo, Model model) {
+        int pageSize = 5;
+
+        Page<Order> page = orderService.findPaginate(pageNo, pageSize);
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("orders", page.getContent());
+        model.addAttribute("services", servicesService.getAllServices());
+        model.addAttribute("clients", clientService.getAllClient());
+        model.addAttribute("statuses", new ArrayList<>(EnumSet.allOf(StatusScore.class)));
+
+        return "admin/order/orders";
+    }
+
+
 }

@@ -1,9 +1,11 @@
 package com.longevity.web.controller.Employee;
 
+import com.longevity.web.domain.scripts.ScriptGroup;
 import com.longevity.web.domain.scripts.Scripts;
 import com.longevity.web.service.scripts.ScriptGroupService;
 import com.longevity.web.service.scripts.ScriptService;
 import com.longevity.web.service.services.ServicesService;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -40,6 +42,7 @@ public class EmployeeScripts {
         model.addAttribute("groups", scriptGroupService.findAll());
 
         return "employee/script/scripts";
+        //return findPaginatedScripts(1, model);
     }
 
 
@@ -68,4 +71,24 @@ public class EmployeeScripts {
         scriptService.delete(scripts);
         return "redirect:/employee/script/all";
     }
+
+    /*
+    @GetMapping("/all/pageus/{pageNo}")
+    public String findPaginatedScripts(@PathVariable("pageNo") int pageNo, Model model) {
+        int pageSize = 1;
+
+        Page<ScriptGroup> page = scriptGroupService.findPaginate(pageNo, pageSize);
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("scripts", page.getContent());
+        model.addAttribute("services", servicesService.getAllServices());
+        model.addAttribute("groups", scriptGroupService.findAll());
+
+        return "employee/script/scripts";
+    }
+
+     */
+
 }

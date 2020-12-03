@@ -1,7 +1,9 @@
 package com.longevity.web.controller.admin;
 
 import com.longevity.web.domain.branch.Branch;
+import com.longevity.web.domain.users.Employee;
 import com.longevity.web.service.BranchService;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,8 +23,9 @@ public class AdminBranch {
 
     @GetMapping("all")
     public String getAllBranch(Model model){
-        model.addAttribute("branches", branchService.getAllBranch());
-        return "admin/branch/branches";
+        //model.addAttribute("branches", branchService.getAllBranch());
+        //return "admin/branch/branches";
+        return findPaginatedBranches(1, model);
     }
 
     @GetMapping("{id}")
@@ -51,4 +54,19 @@ public class AdminBranch {
         branchService.deleteBranch(branch);
         return "redirect:/admin/branch/all";
     }
+
+    @GetMapping("/all/pageus/{pageNo}")
+    public String findPaginatedBranches(@PathVariable("pageNo") int pageNo, Model model) {
+        int pageSize = 5;
+
+        Page<Branch> page = branchService.findPaginate(pageNo, pageSize);
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("branches", page.getContent());
+
+        return "admin/branch/branches";
+    }
+
 }

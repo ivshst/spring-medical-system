@@ -1,6 +1,7 @@
 package com.longevity.web.service.scripts;
 
 import com.longevity.web.domain.scripts.CustomScripts;
+import com.longevity.web.domain.scripts.ScriptGroup;
 import com.longevity.web.domain.users.Client;
 import com.longevity.web.domain.util.CustomScriptNote;
 import com.longevity.web.repo.ClientRepo;
@@ -8,6 +9,9 @@ import com.longevity.web.repo.CustomScriptRepo;
 import com.longevity.web.repo.NoteRepo;
 import com.longevity.web.repo.ServicesRepo;
 import com.longevity.web.util.ServiceUtil;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -54,4 +58,10 @@ public class CustomScriptService {
     public void delete(CustomScripts customScript) {
         customScriptRepo.delete(customScript);
     }
+
+    public Page<CustomScripts> findPaginate(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo -1, pageSize);
+        return this.customScriptRepo.findAll(pageable);
+    }
+
 }

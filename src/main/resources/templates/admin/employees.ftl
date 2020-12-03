@@ -41,6 +41,32 @@
                                          </#list>
                                         </tbody>
                                     </table>
+                                    <div class="dataTables_paginate paging_simple_numbers" id="example_paginate" style="margin-top: 1em;">
+                                    <#list 1..totalPages as p>
+                                        <#if p != currentPage >
+                                            <a  href="/admin/empl/all/pageus/${p}" class="paginate_button">${p}</a>
+                                        <#else>
+                                            <a  href="#" class="paginate_button current">${p}</a>
+                                        </#if>
+
+                                    </#list>
+                                    </div>
+                                    <#--
+                                    <div th:if = "${totalPages > 1}" class="dataTables_info" id="example_info" role="status" aria-live="polite">Total Rows: [[${totalItems}]]</div>
+                                    <div th:if = "${totalPages > 1}" class="dataTables_paginate paging_simple_numbers" id="example_paginate">
+
+                                        <span>
+                                            <b th:each="i: ${#numbers.sequence(1, totalPages)}">
+                                            <a th:if="${currentPage != i}" th:href="@{'/pagead/' + ${i}}" class="paginate_button">[[${i}]]</a>
+                                           <a th:unless="${currentPage != i}" class="paginate_button current">[[${i}]]</a>
+                                            </b>
+                                        </span>
+                                        <a th:if="${currentPage < totalPages}" th:href="@{'/pagead/'} + ${currentPage + 1}" class="paginate_button disabled">Next</a>
+                                        <a th:unless="${currentPage < totalPages}">Next</a>
+                                        <a th:if="${currentPage < totalPages}" th:href="@{'/pagead/'} + ${totalPages}" class="paginate_button disabled">Last</a>
+                                        <a th:unless="${currentPage < totalPages}">Last</a>
+                                    </div>
+                                     -->
                                 </div>
                             </div>
                         </div>

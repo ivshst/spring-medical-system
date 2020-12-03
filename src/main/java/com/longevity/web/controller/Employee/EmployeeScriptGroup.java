@@ -1,7 +1,9 @@
 package com.longevity.web.controller.Employee;
 
+import com.longevity.web.domain.branch.Branch;
 import com.longevity.web.domain.scripts.ScriptGroup;
 import com.longevity.web.service.scripts.ScriptGroupService;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,8 +23,9 @@ public class EmployeeScriptGroup {
 
     @GetMapping("all")
     public String getAllScriptGroup(Model model){
-        model.addAttribute("groups", scriptGroupService.findAll());
-        return "employee/script/groups";
+        //model.addAttribute("groups", scriptGroupService.findAll());
+        //return "employee/script/groups";
+        return findPaginatedGroups(1, model);
     }
 
     @GetMapping("{id}")
@@ -49,5 +52,20 @@ public class EmployeeScriptGroup {
         scriptGroupService.delete(scriptGroup);
         return "redirect:/employee/script_group/all";
     }
+
+    @GetMapping("/all/pageus/{pageNo}")
+    public String findPaginatedGroups(@PathVariable("pageNo") int pageNo, Model model) {
+        int pageSize = 5;
+
+        Page<ScriptGroup> page = scriptGroupService.findPaginate(pageNo, pageSize);
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("groups", page.getContent());
+
+        return "employee/script/groups";
+    }
+
 }
 

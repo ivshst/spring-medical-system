@@ -26,7 +26,7 @@
                                     <div class="col-10">
                                         <form action="/employee/custom_script/all" method="get">
                                             <select name="filter" class="service-input login_text_field_bg input-style">
-                                                <option value="" selected>Пусто</option>
+                                                <option value="" selected>Search</option>
                                                 <#list groups as group>
                                                     <option value="${group.getName()}">${group.getName()}</option>
                                                 </#list>
@@ -63,11 +63,7 @@
                                                     </#list>
                                                 </td>
                                                 <td style = "padding: 8px 10px;">
-                                                    <#--
-                                                    <#list script.getScriptGroup() as group>
-                                                        <input type="text" name="${group.getName()}" value="${group.getName()}" readonly>
-                                                    </#list>
-                                                    -->
+                                                    <input type="text" class="form-control login_text_field_bg input-style" name="${script.getScriptGroup().getName()}" value="${script.getScriptGroup().getName()}" readonly>
                                                 </td>
                                                 <td style = "padding: 8px 10px;"><a href="/employee/custom_script/template/${script.getId()}"   class="badge badge-success">View</a></td>
                                             </tr>
@@ -102,7 +98,6 @@
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Designation: activate to sort column ascending" style="width: 456px;">Client</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Joining date: activate to sort column ascending" style="width: 222px;">Services</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Joining date: activate to sort column ascending" style="width: 222px;">Comments</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Emp. Status: activate to sort column ascending" style="width: 241px;">Group</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Emp. Status: activate to sort column ascending" style="width: 241px;">Action</th>
                                         </tr>
                                         </thead>
@@ -121,19 +116,12 @@
                                                         <input type="text"  class="form-control login_text_field_bg input-style" name="${note.note}" value="${note.note}" readonly>
                                                     </#list>
                                                 </td>
-
-                                                <td style = "padding: 8px 10px;">
-                                                    <#--
-                                                    <#list script.getScriptGroup() as group>
-                                                        <input type="text" name="${group.getName()}" value="${group.getName()}" readonly>
-                                                    </#list>
-                                                    -->
-                                                </td>
-                                                <td style = "padding: 8px 10px;"><a href="/employee/custom_script/${customScript.getId()}"  class="badge badge-success">View</a><a class="badge badge-danger" href="/employee/custom_script/${customScript.getId()}/delete">Удалить</a></td>
+                                                <td style = "padding: 8px 10px;"><a href="/employee/custom_script/${customScript.getId()}"  class="badge badge-success">View</a><a class="badge badge-danger" href="/employee/custom_script/${customScript.getId()}/delete">Delete</a></td>
                                             </tr>
                                         </#list>
                                         </tbody>
                                     </table>
+
                                 </div>
                             </div>
                         </div>

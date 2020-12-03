@@ -37,6 +37,16 @@
                                         </#list>
                                         </tbody>
                                     </table>
+                                    <div class="dataTables_paginate paging_simple_numbers" id="example_paginate" style="margin-top: 1em;">
+                                        <#list 1..totalPages as p>
+                                            <#if p != currentPage >
+                                                <a  href="/admin/service/all/pageus/${p}" class="paginate_button">${p}</a>
+                                            <#else>
+                                                <a  href="#" class="paginate_button current">${p}</a>
+                                            </#if>
+
+                                        </#list>
+                                    </div>
                                 </div>
                             </div>
                         </div>

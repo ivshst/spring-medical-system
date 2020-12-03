@@ -3,6 +3,7 @@ package com.longevity.web.controller.admin;
 import com.longevity.web.domain.users.Employee;
 import com.longevity.web.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,8 +26,9 @@ public class AdminEmpManager{
 
     @GetMapping("/all")
     public String getAllEmployee(Model model){
-        model.addAttribute("employees", employeeService.getAllEmployees());
-        return "admin/employees";
+        //model.addAttribute("employees", employeeService.getAllEmployees());
+        //return "admin/employees";
+        return findPaginatedUsers(1, model);
     }
 
     @GetMapping("/{id}")
@@ -51,4 +53,20 @@ public class AdminEmpManager{
             employeeService.deleteEmployee(employee);
         return "redirect:/admin/empl/all";
     }
+
+    @GetMapping("/all/pageus/{pageNo}")
+    public String findPaginatedUsers(@PathVariable("pageNo") int pageNo, Model model) {
+        int pageSize = 5;
+
+        Page<Employee> page = employeeService.findPaginate(pageNo, pageSize);
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("employees", page.getContent());
+
+        return "admin/employees";
+    }
+
+
 }

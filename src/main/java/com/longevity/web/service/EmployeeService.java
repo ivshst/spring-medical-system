@@ -2,6 +2,9 @@ package com.longevity.web.service;
 
 import com.longevity.web.domain.users.Employee;
 import com.longevity.web.repo.EmployeeRepo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,5 +30,10 @@ public class EmployeeService {
     }
     public void deleteEmployee(Employee employee){
         employeeRepo.delete(employee);
+    }
+
+    public Page<Employee> findPaginate(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo -1, pageSize);
+        return this.employeeRepo.findAll(pageable);
     }
 }
